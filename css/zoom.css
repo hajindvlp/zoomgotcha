@@ -1,0 +1,277 @@
+body {
+  background-color: darkslategrey;
+}
+
+p {
+  display: inline-block;
+  margin: 0;
+}
+
+#zoomStart {
+  overflow: hidden;
+  width: 700px;
+  height: 550px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+
+  /* background-color: #f4f4f4; */
+}
+
+
+
+#container {
+  width: 100%;
+  height: 100%;
+
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#container #logo {
+  width: 60%;
+}
+
+#container .bt {
+  margin-top: 50px;
+  width: 40%;
+}
+
+
+
+#wayContainer {
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: row;
+}
+
+#wayContainer #way {
+  height: 100%;
+}
+
+#wayContainer #backCaret {
+  margin: 20px 10px 0 30px;
+  font-size: 100px;
+  color: coral;
+  display: inline;
+}
+
+#wayContainer #backCaret:hover {
+  color: lightcoral;
+}
+
+
+
+#meetContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;  
+  background-color: #f4f4f4;
+}
+
+#meetContainer #meetBack {
+  height: 100%;
+  position: absolute;
+}
+
+#meetContainer #meetBt {
+  z-index: 50;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 155px;
+  width: 370px;
+  left: 0;
+  right: 0;
+}
+
+#meetContainer #meetName {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 600px;
+  left: 0;
+  right: 0;
+}
+
+
+#listContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;  
+  background-color: #f4f4f4;
+}
+
+#listContainer #listBack {
+  height: 100%;
+  position: absolute;
+}
+
+#listContainer #listButtons {
+  position: absolute;
+  right: 170px;
+  top: 55px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+#listContainer .listBt {
+  z-index: 100;
+  width: 100px;
+  margin-top: 20px;
+}
+
+
+
+#zoomGame {
+  overflow: hidden;
+  width: 900px;
+  height: 675px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  
+  background-image: url(../img/back.png);
+
+  border-radius: 10px;
+}
+
+#top {
+  margin: auto auto 0 auto;
+  width: 95%;
+  height: calc(598px - 80px);
+}
+
+#timer {
+  float: left;
+}
+
+#score {
+  width: 100%;
+  margin-top: 5px;
+  height: 25px;
+
+  color: white;
+  font-size: 24px;
+}
+
+#scoreLabel {
+  float: right;
+  margin-right: 20px;
+}
+
+#scoreNum {
+  float: right;
+}
+
+#scoreDelta {
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  z-index: 5;
+  color: red;
+  font-size: 18px;
+}
+
+#page2 {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+#page1 {
+  width: 100%;
+  height: 100%;
+}
+
+.bigBlock {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bigBlock img {
+  border-radius: 10px;
+  height: 70%;
+}
+
+#pageCtrl {
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+i {
+  display: inline-block;
+}
+
+#pageNum {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  margin: 0;
+  font-size: 30px;
+  color: white;
+  margin: 0 20px;
+}
+
+.caret {
+  color: magenta;
+  font-size: 48px;
+}
+
+.caret:hover {
+  color: red;
+}
+
+.block {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #141414;
+  width: 177px;
+  height: 133px;
+  border-radius: 5px;
+  margin: auto;
+
+  overflow: hidden;
+}
+
+.block:hover {
+  background-color: #676870;
+}
+
+.block .name {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.blockImg {
+  width: 100%;
+  height: 100%;
+}

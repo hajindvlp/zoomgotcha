@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/zoom.css">
+  </head>
+  <body>
+
+    <div id="zoomStart">
+      <div id="container">
+        <img src="./img/logo.png" id="logo"/>
+        <img src="./img/bt1.png" class="bt" id="bt1"/>
+        <img src="./img/bt2.png" class="bt" id="bt2"/>
+      </div>
+      <div id="wayContainer"> 
+        <i class="fa fa-caret-left caret" id="backCaret"></i>
+        <img src="./img/gameway.png" id="way"> 
+      </div>
+      <div id="meetContainer">
+        <i class="fa fa-caret-left caret" id="backCaret"></i>
+        <img src="./img/meet.png" id="meetBack">
+        <img src="./img/meetBt.png" id="meetBt">
+        <img src="./img/meetName.png" id="meetName">
+      </div>
+      <div id="listContainer">
+        <img src="./img/list.png" id="listBack">
+        <div id="listButtons">
+          <img src="./img/listBt.png" class="listBt">
+          <img src="./img/listBt.png" class="listBt">
+          <img src="./img/listBt.png" class="listBt">
+          <img src="./img/listBt.png" class="listBt">
+        </div>
+      </div>
+    </div>
+
+    <div id="zoomGame">
+      <div id="top">
+        <div id="score">
+          <p id="timer"></p>
+          <p id="scoreNum"> [Score Number] </p>
+          <p id="scoreLabel">score : </p>
+          <p id="scoreDelta"> [Score Delta] </p>
+        </div>
+        <div id="page1">
+          <div class="bigBlock"><img src="./img/t1.png" id="teacherImg"></div>
+        </div>
+        <div id="page2">
+          <div class="block" id="1-1"><p class="name"></p></div>
+          <div class="block" id="1-2"><p class="name"></p></div>
+          <div class="block" id="1-3"><p class="name"></p></div>
+          <div class="block" id="1-4"><p class="name"></p></div>
+          
+          <div class="block" id="2-1"><p class="name"></p></div>
+          <div class="block" id="2-2"><p class="name"></p></div>
+          <div class="block" id="2-3"><p class="name"></p></div>
+          <div class="block" id="2-4"><p class="name"></p></div>
+          
+          <div class="block" id="3-1"><p class="name"></p></div>
+          <div class="block" id="3-2"><p class="name"></p></div>
+          <div class="block" id="3-3"><p class="name"></p></div>
+          <div class="block" id="3-4"><p class="name"></p></div>
+        </div>
+      </div>
+      <div id="pageCtrl">
+        <i class="fa fa-caret-left caret" id="leftCaret"></i>
+        <p id="pageNum">1</p>
+        <i class="fa fa-caret-right caret" id="rightCaret"></i>
+      </div>
+    </div>
+
+    <script src="./js/zoom.js"></script>
+  </body>
+</html>
