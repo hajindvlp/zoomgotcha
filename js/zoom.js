@@ -118,16 +118,16 @@ function updateList() {
   let listBts = [...document.getElementsByClassName("listBt")];
   listBts.forEach((listBt, idx) => {
     if(completed[idx]) {
-      listBt.src = "./img/listDone.png";
+      listBt.src = "./img/button/listDone.png";
       let oldListBt = listBt;
       let newListBt = oldListBt.cloneNode(true);
       oldListBt.parentElement.replaceChild(newListBt, oldListBt);
-    }  else {
+    } else {
       listBt.addEventListener("mouseover", (evt) => {
-        listBt.src = "./img/listBt1.png";
+        listBt.src = "./img/button/listBt1.png";
       });
       listBt.addEventListener("mouseleave", (evt) => {
-        listBt.src = "./img/listBt.png";
+        listBt.src = "./img/button/listBt.png";
       });    
       listBt.addEventListener("click", (evt) => {
         selectedTeacher = idx;
@@ -138,17 +138,22 @@ function updateList() {
 }
 
 function setButtons() {
-  let bt1 = document.getElementById("bt1");
-  let bt2 = document.getElementById("bt2");
+  let buttons = [...document.getElementsByClassName("bt")];
+  let bt1 = document.getElementById("mainBt1");
+  let bt2 = document.getElementById("mainBt2");
   let backBt = document.getElementById("backCaret");
   let meetBt = document.getElementById("meetBt");
 
-  bt1.addEventListener("mouseover", (evt) => {
-    bt1.src = "./img/bt1-2.png";
+  console.log(buttons);
+  buttons.forEach((button) => {
+    button.addEventListener("mouseover", () => {
+      button.src = `./img/button/${button.id}1.png`;
+    });
+    button.addEventListener("mouseleave", () => {
+      button.src = `./img/button/${button.id}.png`;
+    });
   });
-  bt1.addEventListener("mouseleave", (evt) => {
-    bt1.src = "./img/bt1.png";
-  });
+
   bt1.addEventListener("click", (evt) => {
     showGameWay();
   });
@@ -156,20 +161,8 @@ function setButtons() {
     showStart();
   });
 
-  bt2.addEventListener("mouseover", (evt) => {
-    bt2.src = "./img/bt2-2.png";
-  });
-  bt2.addEventListener("mouseleave", (evt) => {
-    bt2.src = "./img/bt2.png";
-  });
   bt2.addEventListener("click", (evt) => {
     showMeet();
-  });
-  meetBt.addEventListener("mouseover", (evt) => {
-    meetBt.src = "./img/meetBt1.png";
-  });
-  meetBt.addEventListener("mouseleave", (evt) => {
-    meetBt.src = "./img/meetBt.png";
   });
   meetBt.addEventListener("click", (evt) => {
     showList();
@@ -189,7 +182,7 @@ function showPage2() {
 
 function hideAll() {
   document.getElementById("zoomGame").style.display = "none";
-  document.getElementById("container").style.display = "none";
+  document.getElementById("mainContainer").style.display = "none";
   document.getElementById("wayContainer").style.display = "none";
   document.getElementById("meetContainer").style.display = "none";
   document.getElementById("listContainer").style.display = "none";
@@ -197,7 +190,7 @@ function hideAll() {
 
 function showStart() {
   hideAll();
-  document.getElementById("container").style.display = "flex";
+  document.getElementById("mainContainer").style.display = "flex";
 }
 
 function showMeet() {  
