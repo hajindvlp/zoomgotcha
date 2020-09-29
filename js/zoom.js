@@ -5,6 +5,8 @@ window.onload = () => {
 
 function initialize() {
   showStart();
+  selectedTeacher = 0;
+  showGame();
 }
 
 let completed = [false, false, false, false];
@@ -33,14 +35,15 @@ let classes = [
 ];
 var score;
 var scores = [0, 0, 0, 0];
+const gameDur = 100; // min
 
 function gameInit() {
   hideAlert();
   setNames();
   setPages();
-  
+
   completed[selectedTeacher] = true;
-  score = 0;
+  // score = 0;
   document.getElementById("teacherImg").src = `./img/t${selectedTeacher+1}.png`;
   let time = 0;
   let sec, msec;
@@ -49,7 +52,7 @@ function gameInit() {
     sec = Math.floor(time/100);
     msec = time%100;
     document.getElementById("timer").innerHTML = `${sec}.${msec}`;
-    if(time >= 30 * 100) {
+    if(time >= gameDur * 100) {
       clearInterval(timerId);
       showGameOver();
     }
@@ -58,8 +61,8 @@ function gameInit() {
 
 function showGameOver() {
   showAlert();
-  document.getElementById("seconds").innerHTML = "3";
-  let leftTime = 2;
+  document.getElementById("seconds").innerHTML = "5";
+  let leftTime = 4;
   let alertInterval = setInterval(() => {
     document.getElementById("seconds").innerHTML = leftTime;
     if(leftTime == 0) {
@@ -104,6 +107,15 @@ function setPages() {
 
 var pageNum;
 var deltaScore;
+var studentState = array2d(4, 5).fill(false);
+const States = {
+  STUDY: 1,
+  PLAY: 2,
+  NO: 3,
+  PENDING: 0
+};
+
+let students = array2d(4, 5);
 
 function setNames() {
   let i, j;
@@ -111,15 +123,42 @@ function setNames() {
   score = 0;
   updateScore(score, 0);
 
+  let visit = new Array(20);
   for(i=1 ; i<=3 ; i++) {
     for(j=1 ; j<=4 ; j++) {
-      let id = `${i}-${j}`;
+      let rn;
+      while(visit[rn]) rn = Math.round(Math.random()*100)%20 + 1;
+      visit[rn] = true;
+      students[i][j] = rn; 
+      let block = document.getElementById(`${i}-${j}`).id = rn;
+    }
+  }
+
+  for(i=1 ; i<=3 ; i++) {
+    for(j=1 ; j<=4 ; j++) {
+      let id = students[i][j];
       let block = document.getElementById(id);
       block.children[0].innerHTML = names[i-1][j-1];
+
+      // setInterval(() => {
+      //   if(studentState[i][j] != States.PENDING) {
+      //     random(() => { // Study
+      //       studentState[i][j] = States.STUDY;
+            
+      //     }, 50);
+      //     random(() => { // Play
+      //       studentState[i][j] = States.PLAY;
+      //     }, 30);
+      //     random(() => { // No cam
+      //       studentStates[i][j] = States.NO;
+      //     }, 20);
+      //   }
+      // }, 1000);
+
       block.addEventListener('click', (evt) => {
         if(evt.target.tagName != "IMG") {
           let target = (evt.target.tagName == "DIV") ? evt.target : evt.target.parentElement;
-          let id = `${selectedTeacher}-${target.id}`;
+          let id = `${target.id}`;
           let orgInnerHTML = target.innerHTML;
           let randNum = Math.random() * 100;
           if(randNum <= 45) {
@@ -129,7 +168,7 @@ function setNames() {
             id = `${id}-2`;
             updateScore(score, 100);
           } 
-          target.innerHTML = `<img src="./img/${id}.png" class="blockImg"/>`;
+          target.innerHTML = `<img src="./img/students/${id}.png" class="blockImg"/>`;
           setTimeout(() => { target.innerHTML = orgInnerHTML }, 5000);
         }
       });
@@ -240,4 +279,14 @@ function hideAlert() {
 function showAlert() {
   document.getElementById("alert").style.backdropFilter = "blur(5px)";
   document.getElementById("alert").style.display = "block";
+}
+
+function random(callback, prob) {
+  let rn = Math.random() * 100;
+
+  if(rn < prob) callback();
+}
+
+function array2d(n, m) {
+  return new Array(n).fill(0).map(() => new Array(m).fill(0));
 }
