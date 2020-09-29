@@ -144,7 +144,6 @@ function setButtons() {
   let backBt = document.getElementById("backCaret");
   let meetBt = document.getElementById("meetBt");
 
-  console.log(buttons);
   buttons.forEach((button) => {
     button.addEventListener("mouseover", () => {
       button.src = `./img/button/${button.id}1.png`;
@@ -154,19 +153,11 @@ function setButtons() {
     });
   });
 
-  bt1.addEventListener("click", (evt) => {
-    showGameWay();
-  });
-  backBt.addEventListener("click", (evt) => {
-    showStart();
-  });
+  bt1.addEventListener("click", () => showGameWay());
+  backBt.addEventListener("click", () => showStart());
 
-  bt2.addEventListener("click", (evt) => {
-    showMeet();
-  });
-  meetBt.addEventListener("click", (evt) => {
-    showList();
-  });
+  bt2.addEventListener("click", () => showMeet());
+  meetBt.addEventListener("click", () => showList());
   updateList();
 }
 
