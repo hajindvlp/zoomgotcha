@@ -5,37 +5,13 @@ window.onload = () => {
 
 function initialize() {
   showStart();
-  selectedTeacher = 0;
-  showGame();
 }
 
 let completed = [false, false, false, false];
 let selectedTeacher;
-let classes = [
-  [
-    ["2530 임성주", "2535 허가은", "2526 위승빈", "2520 여준호"],
-    ["2508 김준형", "2533 정정훈", "2518 양혜민", "2515 박예찬"],
-    ["2509 김찬영", "2506 김서은", "2502 김경범", "2501 권경훈"]
-  ],
-  [
-    ["2530 임성주", "2535 허가은", "2526 위승빈", "2520 여준호"],
-    ["2508 김준형", "2533 정정훈", "2518 양혜민", "2515 박예찬"],
-    ["2509 김찬영", "2506 김서은", "2502 김경범", "2501 권경훈"]
-  ],
-  [
-    ["2530 임성주", "2535 허가은", "2526 위승빈", "2520 여준호"],
-    ["2508 김준형", "2533 정정훈", "2518 양혜민", "2515 박예찬"],
-    ["2509 김찬영", "2506 김서은", "2502 김경범", "2501 권경훈"]
-  ],
-  [
-    ["2530 임성주", "2535 허가은", "2526 위승빈", "2520 여준호"],
-    ["2508 김준형", "2533 정정훈", "2518 양혜민", "2515 박예찬"],
-    ["2509 김찬영", "2506 김서은", "2502 김경범", "2501 권경훈"]
-  ]
-];
-var score;
+var score = 0;
 var scores = [0, 0, 0, 0];
-const gameDur = 100; // min
+const gameDur = 30; // sec
 
 function gameInit() {
   hideAlert();
@@ -43,14 +19,14 @@ function gameInit() {
   setPages();
 
   completed[selectedTeacher] = true;
-  // score = 0;
   document.getElementById("teacherImg").src = `./img/t${selectedTeacher+1}.png`;
   let time = 0;
   let sec, msec;
   let timerId = setInterval(() => {
     time += 1;
-    sec = Math.floor(time/100);
-    msec = time%100;
+    let vTime = gameDur * 100 - time;
+    sec = Math.floor(vTime/100);
+    msec = vTime%100;
     document.getElementById("timer").innerHTML = `${sec}.${msec}`;
     if(time >= gameDur * 100) {
       clearInterval(timerId);
@@ -60,6 +36,12 @@ function gameInit() {
 }
 
 function showGameOver() {
+  for(let i=1 ; i<=3 ; i++) {
+    for(let j=1 ; j<=4 ; j++) {
+      document.getElementById(studentIds[i][j]).id = `${i}-${j}`;
+    }
+  }
+
   showAlert();
   document.getElementById("seconds").innerHTML = "5";
   let leftTime = 4;
@@ -76,6 +58,8 @@ function showGameOver() {
   }, 1000);
 }
 
+var pageNum;
+var deltaScore = 0;
 function updateScore(orgScore, dScore) {
   score = orgScore + dScore;
   if(dScore != 0) deltaScore = (dScore > 0) ? `+${dScore}` : `${dScore}`;
@@ -104,76 +88,81 @@ function setPages() {
     }
   });
 }
-
-var pageNum;
-var deltaScore;
-var studentState = array2d(4, 5).fill(false);
 const States = {
   STUDY: 1,
   PLAY: 2,
   NO: 3,
-  PENDING: 0
+  PENDING: 0,
+  NONE: -1
 };
-
-let students = array2d(4, 5);
+const studentNames = [ "",
+"2518양혜민", "2515박예찬", "2520여준호", "2533정정훈", "2535허가은", "2502김경범", 
+"2526위승빈", "2531전다예", "2501권경훈", "2506김서은", "2512노의찬", "2527유승환",
+"2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
+"2524오준서", "2522오승주", "2523오영준", "2507김은석",
+];
+const studentNum = 22;
+var studentState = array2d(4, 5, States.NONE);
+let studentIds = array2d(4, 5, 0); // seat number to random number
+let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
 
 function setNames() {
   let i, j;
-  let names = classes[selectedTeacher];
-  score = 0;
-  updateScore(score, 0);
 
-  let visit = new Array(20);
+  let visit = new Array(20).fill(false);
   for(i=1 ; i<=3 ; i++) {
     for(j=1 ; j<=4 ; j++) {
-      let rn;
-      while(visit[rn]) rn = Math.round(Math.random()*100)%20 + 1;
+
+      let rn = Math.round(Math.random()*100)%studentNum + 1;
+      while(visit[rn]) rn = Math.round(Math.random()*100)%studentNum + 1;
       visit[rn] = true;
-      students[i][j] = rn; 
-      let block = document.getElementById(`${i}-${j}`).id = rn;
-    }
-  }
 
-  for(i=1 ; i<=3 ; i++) {
-    for(j=1 ; j<=4 ; j++) {
-      let id = students[i][j];
-      let block = document.getElementById(id);
-      block.children[0].innerHTML = names[i-1][j-1];
+      studentIds[i][j] = rn; 
+      studentLoc[rn] = [i, j];
+      document.getElementById(`${i}-${j}`).id = rn;
 
-      // setInterval(() => {
-      //   if(studentState[i][j] != States.PENDING) {
-      //     random(() => { // Study
-      //       studentState[i][j] = States.STUDY;
-            
-      //     }, 50);
-      //     random(() => { // Play
-      //       studentState[i][j] = States.PLAY;
-      //     }, 30);
-      //     random(() => { // No cam
-      //       studentStates[i][j] = States.NO;
-      //     }, 20);
-      //   }
-      // }, 1000);
+      let block = document.getElementById(rn);
+      block.children[0].innerHTML = studentNames[rn];
 
       block.addEventListener('click', (evt) => {
-        if(evt.target.tagName != "IMG") {
-          let target = (evt.target.tagName == "DIV") ? evt.target : evt.target.parentElement;
-          let id = `${target.id}`;
-          let orgInnerHTML = target.innerHTML;
+        let target = (evt.target.tagName == "DIV") ? evt.target : evt.target.parentElement;
+        let id = target.id;
+        
+        if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.STUDY) updateScore(score, -50);
+        else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.PLAY) updateScore(score, 100);
+        else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
           let randNum = Math.random() * 100;
-          if(randNum <= 45) {
-            id = `${id}-1`;
-            updateScore(score, -50);
-          } else {
-            id = `${id}-2`;
-            updateScore(score, 100);
-          } 
-          target.innerHTML = `<img src="./img/students/${id}.png" class="blockImg"/>`;
-          setTimeout(() => { target.innerHTML = orgInnerHTML }, 5000);
+          if(randNum <= 45) updateScore(score, -50), showStudent(States.STUDY, id);
+          else updateScore(score, 100), showStudent(States.PLAY, id);
         }
+
+        studentState[studentLoc[id][0]][studentLoc[id][1]] = States.PENDING;
+        setTimeout(() => { studentState[studentLoc[id][0]][studentLoc[id][1]] = States.NONE }, 5000);
       });
     }
   }
+  
+  setInterval(() => {
+    for(let i=1 ; i<=3 ; i++) {
+      for(let j=1 ; j<=4 ; j++) {
+        if(studentState[i][j] != States.PENDING) {
+          let id = studentIds[i][j];
+          let block = document.getElementById(id);
+          random(_ => studentState[i][j] = States.STUDY, 50);
+          random(_ => studentState[i][j] = States.PLAY, 30);
+          random(_ => studentState[i][j] = States.NO, 20);
+          showStudent(studentState[i][j], id);
+        }
+      }
+    }
+  }, 1000);
+}
+
+function showStudent(sState, id) {
+  let block = document.getElementById(id);
+  if(sState == States.STUDY) block.innerHTML = `<img src="./img/students/${id}-1.png" class="blockImg"/>`;
+  else if(sState == States.PLAY) block.innerHTML = `<img src="./img/students/${id}-2.png" class="blockImg"/>`;
+  else if(sState == States.NO) block.innerHTML = `<p class="name">${studentNames[id]}</p>`;
 }
 
 function updateList() {
@@ -283,10 +272,9 @@ function showAlert() {
 
 function random(callback, prob) {
   let rn = Math.random() * 100;
-
   if(rn < prob) callback();
 }
 
-function array2d(n, m) {
-  return new Array(n).fill(0).map(() => new Array(m).fill(0));
+function array2d(n, m, val=0) {
+  return new Array(n).fill(val).map(() => new Array(m).fill(val));
 }
