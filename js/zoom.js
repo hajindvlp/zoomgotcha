@@ -11,38 +11,54 @@ let completed = [false, false, false, false];
 let selectedTeacher;
 var score = 0;
 var scores = [0, 0, 0, 0];
-const gameDur = 30; // sec
+const gameDur = 5; // sec
+var gameLoopId;
+
+const States = {
+  STUDY: 1,
+  PLAY: 2,
+  NO: 3,
+  PENDING: 0,
+  NONE: -1
+};
+const studentNames = [ "",
+"2518양혜민", "2515박예찬", "2520여준호", "2533정정훈", "2535허가은", "2502김경범", 
+"2526위승빈", "2531전다예", "2501권경훈", "2506김서은", "2512노의찬", "2527유승환",
+"2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
+"2524오준서", "2522오승주", "2523오영준", "2507김은석",
+];
+const studentNum = 22;
+var studentState = array2d(4, 5, States.NONE);
+let studentIds = array2d(4, 5, 0); // seat number to random number
+let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
 
 function gameInit() {
+  for(let i=1 ; i<=3 ; i++) 
+    for(let j=1 ; j<=4 ; j++) 
+      if(document.getElementById(studentIds[i][j]))
+        document.getElementById(studentIds[i][j]).id = `${i}-${j}`;
+  
+  studentState = array2d(4, 5, States.NONE);
+  studentIds = array2d(4, 5, 0); 
+  studentLoc = new Array(studentNum+1).fill([0, 0]);
+
   hideAlert();
   setNames();
   setPages();
+  setTimer();
 
   completed[selectedTeacher] = true;
   document.getElementById("teacherImg").src = `./img/t${selectedTeacher+1}.png`;
-  let time = 0;
-  let sec, msec;
-  let timerId = setInterval(() => {
-    time += 1;
-    let vTime = gameDur * 100 - time;
-    sec = Math.floor(vTime/100);
-    msec = vTime%100;
-    document.getElementById("timer").innerHTML = `${sec}.${msec}`;
-    if(time >= gameDur * 100) {
-      clearInterval(timerId);
-      showGameOver();
-    }
-  }, 10);
 }
 
 function showGameOver() {
-  for(let i=1 ; i<=3 ; i++) {
-    for(let j=1 ; j<=4 ; j++) {
-      document.getElementById(studentIds[i][j]).id = `${i}-${j}`;
-    }
-  }
-
+  clearInterval(gameLoopId);
   showAlert();
+
+  let flag = true;
+  for(let i=0 ; i<4 ; i++) if(!completed[i]) flag = false;
+  if(flag) showEndMeeting();
+
   document.getElementById("seconds").innerHTML = "5";
   let leftTime = 4;
   let alertInterval = setInterval(() => {
@@ -56,6 +72,22 @@ function showGameOver() {
     }
     leftTime--;
   }, 1000);
+}
+
+function setTimer() {
+  let time = 0;
+  let sec, msec;
+  let timerId = setInterval(() => {
+    time += 1;
+    let vTime = gameDur * 100 - time;
+    sec = Math.floor(vTime/100);
+    msec = vTime%100;
+    document.getElementById("timer").innerHTML = `${sec}.${msec}`;
+    if(time >= gameDur * 100) {
+      clearInterval(timerId);
+      showGameOver();
+    }
+  }, 10);
 }
 
 var pageNum;
@@ -88,23 +120,6 @@ function setPages() {
     }
   });
 }
-const States = {
-  STUDY: 1,
-  PLAY: 2,
-  NO: 3,
-  PENDING: 0,
-  NONE: -1
-};
-const studentNames = [ "",
-"2518양혜민", "2515박예찬", "2520여준호", "2533정정훈", "2535허가은", "2502김경범", 
-"2526위승빈", "2531전다예", "2501권경훈", "2506김서은", "2512노의찬", "2527유승환",
-"2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
-"2524오준서", "2522오승주", "2523오영준", "2507김은석",
-];
-const studentNum = 22;
-var studentState = array2d(4, 5, States.NONE);
-let studentIds = array2d(4, 5, 0); // seat number to random number
-let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
 
 function setNames() {
   let i, j;
@@ -142,12 +157,11 @@ function setNames() {
     }
   }
   
-  setInterval(() => {
+  gameLoopId = setInterval(() => {
     for(let i=1 ; i<=3 ; i++) {
       for(let j=1 ; j<=4 ; j++) {
         if(studentState[i][j] != States.PENDING) {
           let id = studentIds[i][j];
-          let block = document.getElementById(id);
           random(_ => studentState[i][j] = States.STUDY, 50);
           random(_ => studentState[i][j] = States.PLAY, 30);
           random(_ => studentState[i][j] = States.NO, 20);
@@ -159,10 +173,12 @@ function setNames() {
 }
 
 function showStudent(sState, id) {
-  let block = document.getElementById(id);
-  if(sState == States.STUDY) block.innerHTML = `<img src="./img/students/${id}-1.png" class="blockImg"/>`;
-  else if(sState == States.PLAY) block.innerHTML = `<img src="./img/students/${id}-2.png" class="blockImg"/>`;
-  else if(sState == States.NO) block.innerHTML = `<p class="name">${studentNames[id]}</p>`;
+  if(document.getElementById("zoomGame").style.display == "block") {
+    let block = document.getElementById(id);
+    if(sState == States.STUDY) block.innerHTML = `<img src="./img/students/${id}-1.png" class="blockImg"/>`;
+    else if(sState == States.PLAY) block.innerHTML = `<img src="./img/students/${id}-2.png" class="blockImg"/>`;
+    else if(sState == States.NO) block.innerHTML = `<p class="name">${studentNames[id]}</p>`;     
+  }
 }
 
 function updateList() {
@@ -268,6 +284,10 @@ function hideAlert() {
 function showAlert() {
   document.getElementById("alert").style.backdropFilter = "blur(5px)";
   document.getElementById("alert").style.display = "block";
+}
+
+function showEndMeeting() {
+  document.getElementById("endMeeting").style.display = "block";
 }
 
 function random(callback, prob) {

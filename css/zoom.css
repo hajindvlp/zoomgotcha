@@ -159,6 +159,14 @@ p {
   margin-top: 20px;
 }
 
+#listContainer #endMeeting {
+  display: none;
+  cursor: pointer;
+  z-index: 100;
+  width: 100px;
+  margin-top: 20px;
+}
+
 
 
 #zoomGame {
