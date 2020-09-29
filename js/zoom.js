@@ -5,7 +5,6 @@ window.onload = () => {
 
 function initialize() {
   showStart();
-  // showList();
 }
 
 let completed = [false, false, false, false];
@@ -95,7 +94,6 @@ function setNames() {
           let target = (evt.target.tagName == "DIV") ? evt.target : evt.target.parentElement;
           let id = `${selectedTeacher}-${target.id}`;
           let orgInnerHTML = target.innerHTML;
-  
           let randNum = Math.random() * 100;
           if(randNum <= 45) {
             id = `${id}-1`;
@@ -104,10 +102,8 @@ function setNames() {
             id = `${id}-2`;
             updateScore(score, 100);
           } 
-  
           target.innerHTML = `<img src="./img/${id}.png" class="blockImg"/>`;
           setTimeout(() => { target.innerHTML = orgInnerHTML }, 5000);
-          
         }
       });
     }
@@ -139,9 +135,11 @@ function updateList() {
 
 function setButtons() {
   let buttons = [...document.getElementsByClassName("bt")];
-  let bt1 = document.getElementById("mainBt1");
-  let bt2 = document.getElementById("mainBt2");
-  let backBt = document.getElementById("backCaret");
+  let mainBt1 = document.getElementById("mainBt1");
+  let mainBt2 = document.getElementById("mainBt2");
+  let WayToMainBt = document.getElementById("WayToMain");
+  let MeetToMainBt = document.getElementById("MeetToMain");
+  let ListToMeet = document.getElementById("ListToMeet");
   let meetBt = document.getElementById("meetBt");
 
   buttons.forEach((button) => {
@@ -153,11 +151,13 @@ function setButtons() {
     });
   });
 
-  bt1.addEventListener("click", () => showGameWay());
-  backBt.addEventListener("click", () => showStart());
+  WayToMainBt.addEventListener("click", showStart);
+  MeetToMainBt.addEventListener("click", showStart);
+  ListToMeet.addEventListener("click", showMeet);
 
-  bt2.addEventListener("click", () => showMeet());
-  meetBt.addEventListener("click", () => showList());
+  mainBt1.addEventListener("click", showGameWay);
+  mainBt2.addEventListener("click", showMeet);
+  meetBt.addEventListener("click",  showList);
   updateList();
 }
 
@@ -218,8 +218,4 @@ function updateScore(orgScore, dScore) {
   document.getElementById("scoreDelta").innerHTML = deltaScore;
   scores[selectedTeacher] = score;
   setTimeout(() => { document.getElementById("scoreDelta").innerHTML = ""; }, 500);
-}
-
-function hide(element) {
-  element.style.display = "none";
 }

@@ -1,5 +1,15 @@
+@font-face { 
+  font-family: 'Bazzi'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+}
+
 body {
   background-color: darkslategrey;
+  font-family: 'Bazzi'; 
+  font-weight: bold; 
+  font-style: normal; 
 }
 
 p {
@@ -43,7 +53,17 @@ p {
   width: 40%;
 }
 
+.backCaret {
+  z-index: 200;
+  margin: 20px 10px 0 30px;
+  font-size: 100px;
+  color: coral;
+  display: inline;
+}
 
+.backCaret:hover {
+  color: lightcoral;
+}
 
 #wayContainer {
   width: 100%;
@@ -56,18 +76,6 @@ p {
 #wayContainer #way {
   height: 100%;
 }
-
-#wayContainer #backCaret {
-  margin: 20px 10px 0 30px;
-  font-size: 100px;
-  color: coral;
-  display: inline;
-}
-
-#wayContainer #backCaret:hover {
-  color: lightcoral;
-}
-
 
 
 #meetContainer {
@@ -102,6 +110,20 @@ p {
   width: 600px;
   left: 0;
   right: 0;
+}
+
+#meetInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 40px;
+  position: absolute;
+  z-index: 200;
+  width: 300px;
+  height: 55px;
+  top: 244px;
+  left: 190px;
+  border-radius: 10px;
 }
 
 
