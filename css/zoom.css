@@ -49,11 +49,13 @@ p {
 }
 
 #mainContainer .mainBt {
+  cursor: pointer;
   margin-top: 50px;
   width: 40%;
 }
 
 .backCaret {
+  cursor: pointer;
   z-index: 200;
   margin: 20px 10px 0 30px;
   font-size: 100px;
@@ -92,6 +94,7 @@ p {
 }
 
 #meetContainer #meetBt {
+  cursor: pointer;
   z-index: 50;
   position: absolute;
   margin-left: auto;
@@ -150,6 +153,7 @@ p {
 }
 
 #listContainer .listBt {
+  cursor: pointer;
   z-index: 100;
   width: 100px;
   margin-top: 20px;
@@ -261,6 +265,7 @@ i {
 }
 
 .caret {
+  cursor: pointer;
   color: magenta;
   font-size: 48px;
 }
