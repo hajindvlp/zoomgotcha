@@ -35,6 +35,7 @@ var score;
 var scores = [0, 0, 0, 0];
 
 function gameInit() {
+  hideAlert();
   setNames();
   setPages();
   
@@ -53,6 +54,32 @@ function gameInit() {
       showGameOver();
     }
   }, 10);
+}
+
+function showGameOver() {
+  showAlert();
+  document.getElementById("seconds").innerHTML = "3";
+  let leftTime = 2;
+  let alertInterval = setInterval(() => {
+    document.getElementById("seconds").innerHTML = leftTime;
+    if(leftTime == 0) {
+      document.getElementById("zoomStart").style.display = "block";
+      updateList();
+      showList();
+      hideAlert();
+      clearInterval(alertInterval);
+    }
+    leftTime--;
+  }, 1000);
+}
+
+function updateScore(orgScore, dScore) {
+  score = orgScore + dScore;
+  if(dScore != 0) deltaScore = (dScore > 0) ? `+${dScore}` : `${dScore}`;
+  document.getElementById("scoreNum").innerHTML = score;
+  document.getElementById("scoreDelta").innerHTML = deltaScore;
+  scores[selectedTeacher] = score;
+  setTimeout(() => { document.getElementById("scoreDelta").innerHTML = ""; }, 500);
 }
 
 function setPages() {
@@ -205,17 +232,12 @@ function showGame() {
   document.getElementById("zoomGame").style.display = "block";
 }
 
-function showGameOver() {
-  document.getElementById("zoomStart").style.display = "block";
-  updateList();
-  showList();
+function hideAlert() {
+  document.getElementById("alert").style.backdropFilter = "none";
+  document.getElementById("alert").style.display = "none";
 }
 
-function updateScore(orgScore, dScore) {
-  score = orgScore + dScore;
-  if(dScore != 0) deltaScore = (dScore > 0) ? `+${dScore}` : `${dScore}`;
-  document.getElementById("scoreNum").innerHTML = score;
-  document.getElementById("scoreDelta").innerHTML = deltaScore;
-  scores[selectedTeacher] = score;
-  setTimeout(() => { document.getElementById("scoreDelta").innerHTML = ""; }, 500);
+function showAlert() {
+  document.getElementById("alert").style.backdropFilter = "blur(5px)";
+  document.getElementById("alert").style.display = "block";
 }
