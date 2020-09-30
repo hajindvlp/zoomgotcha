@@ -167,6 +167,17 @@ p {
   margin-top: 20px;
 }
 
+#endingContainer {
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: row;  
+  background-color: #f4f4f4;
+}
+
+#endingContainer #endingImg {
+  width: 100%;
+}
 
 
 #zoomGame {

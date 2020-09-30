@@ -14,6 +14,7 @@ var scores = [0, 0, 0, 0];
 const gameDur = 5; // sec
 var gameLoopId;
 
+const targetScore = 100;
 const States = {
   STUDY: 1,
   PLAY: 2,
@@ -229,6 +230,8 @@ function setButtons() {
   mainBt1.addEventListener("click", showGameWay);
   mainBt2.addEventListener("click", showMeet);
   meetBt.addEventListener("click",  showList);
+
+  document.getElementById("endMeeting").addEventListener("click", showEnding);
   updateList();
 }
 
@@ -248,6 +251,7 @@ function hideAll() {
   document.getElementById("wayContainer").style.display = "none";
   document.getElementById("meetContainer").style.display = "none";
   document.getElementById("listContainer").style.display = "none";
+  document.getElementById("endingContainer").style.display = "none";
 }
 
 function showStart() {
@@ -268,6 +272,14 @@ function showGameWay() {
 function showList() {
   hideAll();
   document.getElementById("listContainer").style.display = "flex";
+}
+
+function showEnding() {
+  hideAll();
+  document.getElementById("endingContainer").style.display = "flex";
+
+  if(score >= targetScore) document.getElementById("endingImg").src = "./img/goodEnding.png";
+  else document.getElementById("endingImg").src = "./img/badEnding.png";
 }
 
 function showGame() {
