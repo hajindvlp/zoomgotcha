@@ -314,4 +314,6 @@ function array2d(n, m, val=0) {
 function shortCut() {
   completed.fill(true);
   score = 2000;
+  updateList();
+  showGameOver();
 }
