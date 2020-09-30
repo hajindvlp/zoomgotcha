@@ -173,6 +173,29 @@ p {
   margin-top: 20px;
 }
 
+#waitContainer {
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: row;  
+  background-color: #f4f4f4;
+}
+
+#waitContainer #wait {
+  position: absolute;
+  width: 100%;
+}
+
+#waitContainer #teacherName {
+  z-index: 1000;
+  position: absolute;
+  top: 310px;
+  left: 230px;
+  color: #677585;
+  font-weight: lighter;
+  font-size: 28px;
+}
+
 #endingContainer {
   height: 100%;
   width: 100%;

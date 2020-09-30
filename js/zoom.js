@@ -32,6 +32,9 @@ const studentNames = [ "",
 "2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
 "2524오준서", "2522오승주", "2523오영준", "2507김은석",
 ];
+const teacherNames = [
+  "장재원", "조혜연", "이재민", "김태철"
+]
 
 let studentState = array2d(4, 5, States.NO);
 let studentIds = array2d(4, 5, 0); // seat number to random number
@@ -157,18 +160,6 @@ function setNames() {
           updateScore(score, 100);
           target.classList.add("correct");
         } 
-        // else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
-        //   let randNum = Math.random() * 100;
-        //   if(randNum <= 45) {
-        //     updateScore(score, -50);
-        //     showStudent(States.STUDY, id);
-        //     target.classList.add("wrong");
-        //   } else {
-        //     updateScore(score, 100);
-        //     showStudent(States.PLAY, id);
-        //     target.classList.add("correct");
-        //   }
-        // }
 
         studentState[studentLoc[id][0]][studentLoc[id][1]] = States.PENDING;
         setTimeout(() => { 
@@ -219,7 +210,9 @@ function updateList() {
       listBt.addEventListener("mouseleave", _ => listBt.src = "./img/button/listBt.png");    
       listBt.addEventListener("click", _ => {
         selectedTeacher = idx;
-        showGame();
+        gEBI("teacherName").innerHTML = teacherNames[selectedTeacher];
+        showElement("waitContainer");
+        setTimeout(_ => showGame(), 3000);
       });
     }
   });
@@ -256,7 +249,7 @@ function showPage2() {
 }
 
 function hideAll() {
-  let ids = ["zoomGame", "mainContainer", "wayContainer", "meetContainer", "listContainer", "endingContainer"];
+  let ids = ["zoomGame", "mainContainer", "wayContainer", "meetContainer", "listContainer", "endingContainer", "waitContainer"];
   ids.forEach((id) => {
     if(gEBI(id).style.display != "none") {
       gEBI(id).classList.remove("disappear", "appear");
