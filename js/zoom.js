@@ -156,18 +156,19 @@ function setNames() {
         } else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.PLAY) {
           updateScore(score, 100);
           target.classList.add("correct");
-        } else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
-          let randNum = Math.random() * 100;
-          if(randNum <= 45) {
-            updateScore(score, -50);
-            showStudent(States.STUDY, id);
-            target.classList.add("wrong");
-          } else {
-            updateScore(score, 100);
-            showStudent(States.PLAY, id);
-            target.classList.add("correct");
-          }
-        }
+        } 
+        // else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
+        //   let randNum = Math.random() * 100;
+        //   if(randNum <= 45) {
+        //     updateScore(score, -50);
+        //     showStudent(States.STUDY, id);
+        //     target.classList.add("wrong");
+        //   } else {
+        //     updateScore(score, 100);
+        //     showStudent(States.PLAY, id);
+        //     target.classList.add("correct");
+        //   }
+        // }
 
         studentState[studentLoc[id][0]][studentLoc[id][1]] = States.PENDING;
         setTimeout(() => { 
