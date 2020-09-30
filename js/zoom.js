@@ -4,17 +4,21 @@ window.onload = () => {
 }
 
 function initialize() {
-  showStart();
+  showElement("mainContainer");
+  completed.fill(false);
+  selectedTeacher = 0;
+  score = 0;
 }
 
-let completed = [false, false, false, false];
+let completed = new Array(4).fill(false);
 let selectedTeacher;
 var score = 0;
-var scores = [0, 0, 0, 0];
-const gameDur = 5; // sec
+var scores = new Array(4).fill(0);
 var gameLoopId;
 
+const gameDur = 30; // sec
 const targetScore = 2000;
+const studentNum = 22;
 const States = {
   STUDY: 1,
   PLAY: 2,
@@ -28,7 +32,6 @@ const studentNames = [ "",
 "2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
 "2524오준서", "2522오승주", "2523오영준", "2507김은석",
 ];
-const studentNum = 22;
 var studentState = array2d(4, 5, States.NONE);
 let studentIds = array2d(4, 5, 0); // seat number to random number
 let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
@@ -36,12 +39,13 @@ let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat 
 function gameInit() {
   for(let i=1 ; i<=3 ; i++) 
     for(let j=1 ; j<=4 ; j++) 
-      if(document.getElementById(studentIds[i][j]))
-        document.getElementById(studentIds[i][j]).id = `${i}-${j}`;
+      if(gEBI(studentIds[i][j]))
+        gEBI(studentIds[i][j]).id = `${i}-${j}`;
   
   studentState = array2d(4, 5, States.NONE);
   studentIds = array2d(4, 5, 0); 
   studentLoc = new Array(studentNum+1).fill([0, 0]);
+  if(gameLoopId) clearInterval(gameLoopId);
 
   hideAlert();
   setNames();
@@ -49,7 +53,7 @@ function gameInit() {
   setTimer();
 
   completed[selectedTeacher] = true;
-  document.getElementById("teacherImg").src = `./img/t${selectedTeacher+1}.png`;
+  gEBI("teacherImg").src = `./img/t${selectedTeacher+1}.png`;
 }
 
 function showGameOver() {
@@ -60,14 +64,14 @@ function showGameOver() {
   for(let i=0 ; i<4 ; i++) if(!completed[i]) flag = false;
   if(flag) showEndMeeting();
 
-  document.getElementById("seconds").innerHTML = "5";
+  gEBI("seconds").innerHTML = "5";
   let leftTime = 4;
   let alertInterval = setInterval(() => {
-    document.getElementById("seconds").innerHTML = leftTime;
+    gEBI("seconds").innerHTML = leftTime;
     if(leftTime == 0) {
-      document.getElementById("zoomStart").style.display = "block";
+      gEBI("zoomStart").style.display = "block";
       updateList();
-      showList();
+      showElement("listContainer");
       hideAlert();
       clearInterval(alertInterval);
     }
@@ -83,7 +87,7 @@ function setTimer() {
     let vTime = gameDur * 100 - time;
     sec = Math.floor(vTime/100);
     msec = vTime%100;
-    document.getElementById("timer").innerHTML = `${sec}.${msec}`;
+    gEBI("timer").innerHTML = `${sec}.${msec}`;
     if(time >= gameDur * 100) {
       clearInterval(timerId);
       showGameOver();
@@ -96,27 +100,27 @@ var deltaScore = 0;
 function updateScore(orgScore, dScore) {
   score = orgScore + dScore;
   if(dScore != 0) deltaScore = (dScore > 0) ? `+${dScore}` : `${dScore}`;
-  document.getElementById("scoreNum").innerHTML = score;
-  document.getElementById("scoreDelta").innerHTML = deltaScore;
+  gEBI("scoreNum").innerHTML = score;
+  gEBI("scoreDelta").innerHTML = deltaScore;
   scores[selectedTeacher] = score;
-  setTimeout(() => { document.getElementById("scoreDelta").innerHTML = ""; }, 500);
+  setTimeout(() => { gEBI("scoreDelta").innerHTML = ""; }, 500);
 }
 
 function setPages() {
   pageNum = 1;
   showPage1();
-  document.getElementById("leftCaret").addEventListener("click", (evt) => {
+  gEBI("leftCaret").addEventListener("click", (evt) => {
     if(pageNum == 2) {
       pageNum = 1;
-      document.getElementById("pageNum").innerHTML = pageNum;
+      gEBI("pageNum").innerHTML = pageNum;
       showPage1();
     }
   });
   
-  document.getElementById("rightCaret").addEventListener("click", (evt) => {
+  gEBI("rightCaret").addEventListener("click", (evt) => {
     if(pageNum == 1) {
       pageNum = 2;
-      document.getElementById("pageNum").innerHTML = pageNum;
+      gEBI("pageNum").innerHTML = pageNum;
       showPage2();
     }
   });
@@ -135,9 +139,9 @@ function setNames() {
 
       studentIds[i][j] = rn; 
       studentLoc[rn] = [i, j];
-      document.getElementById(`${i}-${j}`).id = rn;
+      gEBI(`${i}-${j}`).id = rn;
 
-      let block = document.getElementById(rn);
+      let block = gEBI(rn);
       block.children[0].innerHTML = studentNames[rn];
 
       block.addEventListener('click', (evt) => {
@@ -170,12 +174,12 @@ function setNames() {
         }
       }
     }
-  }, 1000);
+  }, 2000);
 }
 
 function showStudent(sState, id) {
-  if(document.getElementById("zoomGame").style.display == "block") {
-    let block = document.getElementById(id);
+  if(gEBI("zoomGame").style.display == "block") {
+    let block = gEBI(id);
     if(sState == States.STUDY) block.innerHTML = `<img src="./img/students/${id}-1.png" class="blockImg"/>`;
     else if(sState == States.PLAY) block.innerHTML = `<img src="./img/students/${id}-2.png" class="blockImg"/>`;
     else if(sState == States.NO) block.innerHTML = `<p class="name">${studentNames[id]}</p>`;     
@@ -191,13 +195,9 @@ function updateList() {
       let newListBt = oldListBt.cloneNode(true);
       oldListBt.parentElement.replaceChild(newListBt, oldListBt);
     } else {
-      listBt.addEventListener("mouseover", (evt) => {
-        listBt.src = "./img/button/listBt1.png";
-      });
-      listBt.addEventListener("mouseleave", (evt) => {
-        listBt.src = "./img/button/listBt.png";
-      });    
-      listBt.addEventListener("click", (evt) => {
+      listBt.addEventListener("mouseover", _ => listBt.src = "./img/button/listBt1.png");
+      listBt.addEventListener("mouseleave", _ => listBt.src = "./img/button/listBt.png");    
+      listBt.addEventListener("click", _ => {
         selectedTeacher = idx;
         showGame();
       });
@@ -207,12 +207,6 @@ function updateList() {
 
 function setButtons() {
   let buttons = [...document.getElementsByClassName("bt")];
-  let mainBt1 = document.getElementById("mainBt1");
-  let mainBt2 = document.getElementById("mainBt2");
-  let WayToMainBt = document.getElementById("WayToMain");
-  let MeetToMainBt = document.getElementById("MeetToMain");
-  let ListToMeet = document.getElementById("ListToMeet");
-  let meetBt = document.getElementById("meetBt");
 
   buttons.forEach((button) => {
     button.addEventListener("mouseover", () => {
@@ -223,83 +217,73 @@ function setButtons() {
     });
   });
 
-  WayToMainBt.addEventListener("click", showStart);
-  MeetToMainBt.addEventListener("click", showStart);
-  ListToMeet.addEventListener("click", showMeet);
+  gEBI("WayToMain").addEventListener("click", _ => showElement("mainContainer"));
+  gEBI("MeetToMain").addEventListener("click", _ => showElement("mainContainer"));
+  gEBI("ListToMeet").addEventListener("click", _ => showElement("meetContainer"));
+  gEBI("mainBt1").addEventListener("click", _ => showElement("wayContainer"));
+  gEBI("mainBt2").addEventListener("click", _ => showElement("meetContainer"));
+  gEBI("meetBt").addEventListener("click",  _ => showElement("listContainer"));
 
-  mainBt1.addEventListener("click", showGameWay);
-  mainBt2.addEventListener("click", showMeet);
-  meetBt.addEventListener("click",  showList);
-
-  document.getElementById("endMeeting").addEventListener("click", showEnding);
+  gEBI("endMeeting").addEventListener("click", showEnding);
+  gEBI("redo").addEventListener("click", initialize);
   updateList();
 }
 
 function showPage1() {
-  document.getElementById("page1").style.display = "block";
-  document.getElementById("page2").style.display = "none";  
+  gEBI("page1").style.display = "block";
+  gEBI("page2").style.display = "none";  
 }
 
 function showPage2() {
-  document.getElementById("page2").style.display = "grid";
-  document.getElementById("page1").style.display = "none";  
+  gEBI("page2").style.display = "grid";
+  gEBI("page1").style.display = "none";  
 }
 
 function hideAll() {
-  document.getElementById("zoomGame").style.display = "none";
-  document.getElementById("mainContainer").style.display = "none";
-  document.getElementById("wayContainer").style.display = "none";
-  document.getElementById("meetContainer").style.display = "none";
-  document.getElementById("listContainer").style.display = "none";
-  document.getElementById("endingContainer").style.display = "none";
+  gEBI("zoomGame").style.display = "none";
+  gEBI("mainContainer").style.display = "none";
+  gEBI("wayContainer").style.display = "none";
+  gEBI("meetContainer").style.display = "none";
+  gEBI("listContainer").style.display = "none";
+  gEBI("endingContainer").style.display = "none";
 }
 
-function showStart() {
+function showElement(id, display="flex") {
   hideAll();
-  document.getElementById("mainContainer").style.display = "flex";
-}
-
-function showMeet() {  
-  hideAll();
-  document.getElementById("meetContainer").style.display = "flex";
-}
-
-function showGameWay() {
-  hideAll();
-  document.getElementById("wayContainer").style.display = "flex";
+  gEBI(id).style.display = display;
 }
 
 function showList() {
   hideAll();
-  document.getElementById("listContainer").style.display = "flex";
+  gEBI("listContainer").style.display = "flex";
 }
 
 function showEnding() {
   hideAll();
-  document.getElementById("endingContainer").style.display = "flex";
+  gEBI("endingContainer").style.display = "flex";
 
-  if(score >= targetScore) document.getElementById("endingImg").src = "./img/goodEnding.png";
-  else document.getElementById("endingImg").src = "./img/badEnding.png";
+  if(score >= targetScore) gEBI("endingImg").src = "./img/goodEnding.png";
+  else gEBI("endingImg").src = "./img/badEnding.png";
 }
 
 function showGame() {
   gameInit();
-  document.getElementById("zoomStart").style.display = "none";
-  document.getElementById("zoomGame").style.display = "block";
+  gEBI("zoomStart").style.display = "none";
+  gEBI("zoomGame").style.display = "block";
 }
 
 function hideAlert() {
-  document.getElementById("alert").style.backdropFilter = "none";
-  document.getElementById("alert").style.display = "none";
+  gEBI("alert").style.backdropFilter = "none";
+  gEBI("alert").style.display = "none";
 }
 
 function showAlert() {
-  document.getElementById("alert").style.backdropFilter = "blur(5px)";
-  document.getElementById("alert").style.display = "block";
+  gEBI("alert").style.backdropFilter = "blur(5px)";
+  gEBI("alert").style.display = "block";
 }
 
 function showEndMeeting() {
-  document.getElementById("endMeeting").style.display = "block";
+  gEBI("endMeeting").style.display = "block";
 }
 
 function random(callback, prob) {
@@ -316,4 +300,8 @@ function shortCut() {
   score = 2000;
   updateList();
   showGameOver();
+}
+
+function gEBI(id) {
+  return document.getElementById(id);
 }

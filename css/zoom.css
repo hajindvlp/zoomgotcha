@@ -179,6 +179,13 @@ p {
   width: 100%;
 }
 
+#endingContainer #redo {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  width: 130px;
+}
+
 
 #zoomGame {
   display: none;
