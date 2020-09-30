@@ -12,9 +12,9 @@ function initialize() {
 
 let completed = new Array(4).fill(false);
 let selectedTeacher;
-var score = 0;
-var scores = new Array(4).fill(0);
-var gameLoopId;
+let score = 0;
+let scores = new Array(4).fill(0);
+let gameLoopId;
 
 const gameDur = 100; // sec
 const targetScore = 2000;
@@ -32,6 +32,7 @@ const studentNames = [ "",
 "2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
 "2524오준서", "2522오승주", "2523오영준", "2507김은석",
 ];
+
 let studentState = array2d(4, 5, States.NONE);
 let studentIds = array2d(4, 5, 0); // seat number to random number
 let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
