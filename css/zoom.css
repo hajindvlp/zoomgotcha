@@ -118,8 +118,10 @@ p {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 40px;
+  font-size: 30px;
   position: absolute;
+  color: #c0cbd7;
+  font-weight: 100;
   z-index: 200;
   width: 300px;
   height: 55px;
@@ -128,6 +130,10 @@ p {
   border-radius: 10px;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #c0cbd7;
+  opacity: 1; /* Firefox */
+}
 
 #listContainer {
   height: 100%;
