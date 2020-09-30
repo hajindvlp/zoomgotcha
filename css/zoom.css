@@ -120,7 +120,7 @@ p {
   outline: none;
   font-size: 30px;
   position: absolute;
-  color: #c0cbd7;
+  color: #d3dde8;
   font-weight: 100;
   z-index: 200;
   width: 300px;
@@ -128,10 +128,11 @@ p {
   top: 244px;
   left: 190px;
   border-radius: 10px;
+  
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #c0cbd7;
+  color: #d3dde8;
   opacity: 1; /* Firefox */
 }
 
