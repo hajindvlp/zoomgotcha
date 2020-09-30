@@ -182,7 +182,7 @@ p {
 #endingContainer #redo {
   position: absolute;
   bottom: 40px;
-  right: 40px;
+  left: 40px;
   width: 130px;
 }
 
@@ -324,6 +324,19 @@ i {
   font-size: 24px;
   font-weight: bold;
   color: white;
+}
+
+.correct {
+  box-sizing: border-box;
+  border: 6px solid yellowgreen;
+  border-radius: 0;
+}
+
+.wrong {
+  box-sizing: border-box;
+  border: 6px solid red;
+  border-radius: 0;
+
 }
 
 .blockImg {

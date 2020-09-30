@@ -16,7 +16,7 @@ var score = 0;
 var scores = new Array(4).fill(0);
 var gameLoopId;
 
-const gameDur = 30; // sec
+const gameDur = 100; // sec
 const targetScore = 2000;
 const studentNum = 22;
 const States = {
@@ -32,7 +32,7 @@ const studentNames = [ "",
 "2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
 "2524오준서", "2522오승주", "2523오영준", "2507김은석",
 ];
-var studentState = array2d(4, 5, States.NONE);
+let studentState = array2d(4, 5, States.NONE);
 let studentIds = array2d(4, 5, 0); // seat number to random number
 let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
 
@@ -148,16 +148,31 @@ function setNames() {
         let target = (evt.target.tagName == "DIV") ? evt.target : evt.target.parentElement;
         let id = target.id;
         
-        if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.STUDY) updateScore(score, -50);
-        else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.PLAY) updateScore(score, 100);
-        else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
+        if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.STUDY) {
+          updateScore(score, -50);
+          target.classList.add("wrong");
+        } else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.PLAY) {
+          updateScore(score, 100);
+          target.classList.add("correct");
+        } else if(studentState[studentLoc[id][0]][studentLoc[id][1]] == States.NO) {
           let randNum = Math.random() * 100;
-          if(randNum <= 45) updateScore(score, -50), showStudent(States.STUDY, id);
-          else updateScore(score, 100), showStudent(States.PLAY, id);
+          if(randNum <= 45) {
+            updateScore(score, -50);
+            showStudent(States.STUDY, id);
+            target.classList.add("wrong");
+          } else {
+            updateScore(score, 100);
+            showStudent(States.PLAY, id);
+            target.classList.add("correct");
+          }
         }
 
         studentState[studentLoc[id][0]][studentLoc[id][1]] = States.PENDING;
-        setTimeout(() => { studentState[studentLoc[id][0]][studentLoc[id][1]] = States.NONE }, 5000);
+        setTimeout(() => { 
+          studentState[studentLoc[id][0]][studentLoc[id][1]] = States.NONE;
+          target.classList.remove("wrong");
+          target.classList.remove("correct");
+        }, 5000);
       });
     }
   }
