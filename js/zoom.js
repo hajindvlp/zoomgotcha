@@ -210,7 +210,7 @@ function updateList() {
       listBt.addEventListener("mouseleave", _ => listBt.src = "./img/button/listBt.png");    
       listBt.addEventListener("click", _ => {
         selectedTeacher = idx;
-        gEBI("teacherName").innerHTML = teacherNames[selectedTeacher];
+        gEBI("teacherName").innerHTML = `${teacherNames[selectedTeacher]}님의`;
         showElement("waitContainer");
         setTimeout(_ => showGame(), 3000);
       });
