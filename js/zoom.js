@@ -225,12 +225,8 @@ function setButtons() {
   let buttons = [...document.getElementsByClassName("bt")];
 
   buttons.forEach((button) => {
-    button.addEventListener("mouseover", () => {
-      button.src = `./img/button/${button.id}1.png`;
-    });
-    button.addEventListener("mouseleave", () => {
-      button.src = `./img/button/${button.id}.png`;
-    });
+    button.addEventListener("mouseover", _ => button.src = `./img/button/${button.id}1.png`);
+    button.addEventListener("mouseleave", _ => button.src = `./img/button/${button.id}.png`);
   });
 
   gEBI("WayToMain").addEventListener("click", _ => showElement("mainContainer"));
@@ -256,16 +252,22 @@ function showPage2() {
 }
 
 function hideAll() {
-  gEBI("zoomGame").style.display = "none";
-  gEBI("mainContainer").style.display = "none";
-  gEBI("wayContainer").style.display = "none";
-  gEBI("meetContainer").style.display = "none";
-  gEBI("listContainer").style.display = "none";
-  gEBI("endingContainer").style.display = "none";
+  let ids = ["zoomGame", "mainContainer", "wayContainer", "meetContainer", "listContainer", "endingContainer"];
+  ids.forEach((id) => {
+    if(gEBI(id).style.display != "none") {
+      gEBI(id).classList.remove("disappear", "appear");
+      void gEBI(id).offsetWidth;
+      gEBI(id).classList.add("disappear");
+    } 
+    gEBI(id).style.display = "none";
+  });
 }
 
 function showElement(id, display="flex") {
   hideAll();
+  gEBI(id).classList.remove("disappear", "appear");
+  void gEBI(id).offsetWidth;
+  gEBI(id).classList.add("appear");
   gEBI(id).style.display = display;
 }
 
@@ -279,7 +281,7 @@ function showEnding() {
   gEBI("endingContainer").style.display = "flex";
 
   if(score >= targetScore) gEBI("endingImg").src = "./img/goodEnding.png";
-  else gEBI("endingImg").src = "./img/badEnding.png";
+  else gEBI("endingImg").src = "./img/badEnding.gif";
 }
 
 function showGame() {

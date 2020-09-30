@@ -27,8 +27,7 @@ p {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   border-radius: 10px;
-
-  /* background-color: #f4f4f4; */
+  background-color: #f4f4f4;
 }
 
 
@@ -369,4 +368,33 @@ i {
   background-color: transparent;
   font-weight: lighter;
   font-size: 35px;
+}
+
+.disappear {
+  animation: disappear 0.5s ease;
+}
+
+.appear {
+  animation: appear 0.5s ease;
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+  }
+
+  top {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  top {
+    opacity: 1;
+  }
 }
