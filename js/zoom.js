@@ -14,7 +14,7 @@ var scores = [0, 0, 0, 0];
 const gameDur = 5; // sec
 var gameLoopId;
 
-const targetScore = 100;
+const targetScore = 2000;
 const States = {
   STUDY: 1,
   PLAY: 2,
@@ -309,4 +309,9 @@ function random(callback, prob) {
 
 function array2d(n, m, val=0) {
   return new Array(n).fill(val).map(() => new Array(m).fill(val));
+}
+
+function shortCut() {
+  completed.fill(true);
+  score = 2000;
 }
