@@ -33,15 +33,16 @@ const studentNames = [ "",
 "2524오준서", "2522오승주", "2523오영준", "2507김은석",
 ];
 
-let studentState = array2d(4, 5, States.NONE);
+let studentState = array2d(4, 5, States.NO);
 let studentIds = array2d(4, 5, 0); // seat number to random number
 let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
 
 function gameInit() {
   for(let i=1 ; i<=3 ; i++) 
     for(let j=1 ; j<=4 ; j++) 
-      if(gEBI(studentIds[i][j]))
-        gEBI(studentIds[i][j]).id = `${i}-${j}`;
+      if(gEBI(studentIds[i][j])) {
+        gEBI(studentIds[i][j]).id = `${i}-${j}`;     
+      }
   
   studentState = array2d(4, 5, States.NONE);
   studentIds = array2d(4, 5, 0); 
@@ -170,7 +171,8 @@ function setNames() {
 
         studentState[studentLoc[id][0]][studentLoc[id][1]] = States.PENDING;
         setTimeout(() => { 
-          studentState[studentLoc[id][0]][studentLoc[id][1]] = States.NONE;
+          studentState[studentLoc[id][0]][studentLoc[id][1]] = States.NO;
+          showStudent(States.NO, id);
           target.classList.remove("wrong");
           target.classList.remove("correct");
         }, 5000);
@@ -183,9 +185,10 @@ function setNames() {
       for(let j=1 ; j<=4 ; j++) {
         if(studentState[i][j] != States.PENDING) {
           let id = studentIds[i][j];
-          random(_ => studentState[i][j] = States.STUDY, 50);
-          random(_ => studentState[i][j] = States.PLAY, 30);
-          random(_ => studentState[i][j] = States.NO, 20);
+          let rn = Math.random() * 100;
+          if(rn < 50) studentState[i][j] = States.STUDY;
+          else if(rn < 80) studentState[i][j] = States.PLAY;
+          else studentState[i][j] = States.NO;
           showStudent(studentState[i][j], id);
         }
       }
@@ -237,7 +240,7 @@ function setButtons() {
   gEBI("meetBt").addEventListener("click",  _ => showElement("listContainer"));
 
   gEBI("endMeeting").addEventListener("click", showEnding);
-  gEBI("redo").addEventListener("click", initialize);
+  gEBI("redo").addEventListener("click", _ => window.location.reload());
   updateList();
 }
 
@@ -271,17 +274,24 @@ function showElement(id, display="flex") {
   gEBI(id).style.display = display;
 }
 
-function showList() {
-  hideAll();
-  gEBI("listContainer").style.display = "flex";
-}
-
 function showEnding() {
+  const goodEndingDur = 5230;
+  const badEndingDur = 22250;
   hideAll();
   gEBI("endingContainer").style.display = "flex";
 
-  if(score >= targetScore) gEBI("endingImg").src = "./img/goodEnding.png";
-  else gEBI("endingImg").src = "./img/badEnding.gif";
+  if(score >= targetScore) {
+    gEBI("endingImg").src = "./img/goodEnding.gif";
+    setTimeout(_ => {
+      gEBI("redo").style.display = "block";
+    }, goodEndingDur);
+  }
+  else {
+    gEBI("endingImg").src = "./img/badEnding.gif";
+    setTimeout(_ => {
+      gEBI("redo").style.display = "block";
+    }, badEndingDur);
+  } 
 }
 
 function showGame() {
@@ -302,11 +312,6 @@ function showAlert() {
 
 function showEndMeeting() {
   gEBI("endMeeting").style.display = "block";
-}
-
-function random(callback, prob) {
-  let rn = Math.random() * 100;
-  if(rn < prob) callback();
 }
 
 function array2d(n, m, val=0) {

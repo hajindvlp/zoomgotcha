@@ -63,7 +63,7 @@ p {
 }
 
 .backCaret:hover {
-  color: lightcoral;
+  color: red;
 }
 
 #wayContainer {
@@ -183,6 +183,14 @@ p {
   bottom: 40px;
   left: 40px;
   width: 130px;
+}
+
+#endingContainer #endingCanvas {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
 }
 
 
