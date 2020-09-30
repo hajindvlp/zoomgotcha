@@ -43,7 +43,7 @@ function gameInit() {
       if(gEBI(studentIds[i][j])) {
         gEBI(studentIds[i][j]).id = `${i}-${j}`;     
       }
-  pageNum = 0;
+  pageNum = 1;
   studentState = array2d(4, 5, States.NONE);
   studentIds = array2d(4, 5, 0); 
   studentLoc = new Array(studentNum+1).fill([0, 0]);
