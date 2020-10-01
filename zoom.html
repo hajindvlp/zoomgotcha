@@ -5,41 +5,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/zoom.css">
   </head>
-  <body>
+  <body id="root">
     <div id="zoomStart">
-      <div id="mainContainer">
+
+      <div id="mainContainer" class="page">
         <img src="./img/logo.png" id="logo"/>
-        <img src="./img/button/mainBt1.png" class="mainBt bt" id="mainBt1"/>
-        <img src="./img/button/mainBt2.png" class="mainBt bt" id="mainBt2"/>
+        <img src="./img/button/mainBt1.png" class="mainBt bt" id="mainBt1" data-goto="wayContainer"/>
+        <img src="./img/button/mainBt2.png" class="mainBt bt" id="mainBt2" data-goto="meetContainer"/>
       </div>
-      <div id="wayContainer"> 
-        <i class="fa fa-caret-left backCaret" id="WayToMain"></i>
+
+      <div id="wayContainer" class="page"> 
+        <i class="fa fa-caret-left backCaret bt" id="WayToMain" data-goto="mainContainer"></i>
         <img src="./img/gameway.png" id="way"> 
       </div>
-      <div id="meetContainer">
-        <i class="fa fa-caret-left backCaret" id="MeetToMain"></i>
+
+      <div id="meetContainer" class="page">
+        <i class="fa fa-caret-left backCaret bt" id="MeetToMain" data-goto="mainContainer"></i>
         <img src="./img/meet.png" id="meetBack">
-        <img src="./img/button/meetBt.png" class="bt" id="meetBt">
+        <img src="./img/button/meetBt.png" class="bt" id="meetBt" data-goto="listContainer">
         <img src="./img/meetName.png" id="meetName">
         <input type="text" id="meetInput" placeholder="이름을 입력하세요">
       </div>
-      <div id="listContainer">
-        <i class="fa fa-caret-left backCaret" id="ListToMeet"></i>
+
+      <div id="listContainer" class="page">
+        <i class="fa fa-caret-left backCaret bt" id="ListToMeet" data-goto="meetContainer"></i>
         <img src="./img/list.png" id="listBack">
         <div id="listButtons">
           <img src="./img/button/listBt.png" class="listBt">
           <img src="./img/button/listBt.png" class="listBt">
           <img src="./img/button/listBt.png" class="listBt">
           <img src="./img/button/listBt.png" class="listBt">
-          <img src="./img/button/endMeeting.png" id="endMeeting" class="bt">
+          <img src="./img/button/endMeeting.png" id="endMeeting" class="bt" data-goto="endingContainer">
         </div>
       </div>
-      <div id="waitContainer">
+
+      <div id="waitContainer" class="page">
         <p id="teacherName"></p>
         <img src="./img/wait.gif" id="wait" alt="">
       </div>
-      <div id="endingContainer">
-        <canvas id="endingCanvas"></canvas>
+
+      <div id="endingContainer" class="page">
         <img id="endingImg">
         <img style="display: none;" src="./img/button/redo.png" id="redo" class="bt">
       </div>
@@ -84,28 +89,11 @@
       </div>
     </div>
 
-    <div style="display: none;">
-      <img src="img/back.png">
-      <img src="img/gameway.png">
-      <img src="img/list.png">
-      <img src="img/logo.png">
-      <img src="img/meet.png">
-      <img src="img/meetName.png">
-      <img src="img/t1.png">
-      <img src="img/t2.png">
-      <img src="img/t3.png">
-      <img src="img/t4.png">
-      <img src="img/button/listBt.png">
-      <img src="img/button/listBt1.png">
-      <img src="img/button/listDone.png">
-      <img src="img/button/mainBt1.png">
-      <img src="img/button/mainBt11.png">
-      <img src="img/button/mainBt2.png">
-      <img src="img/button/mainBt21.png">
-      <img src="img/button/meetBt.png">
-      <img src="img/button/meetBt1.png">
-    </div>
-
-    <script src="./js/zoom.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/games/student.js"></script>
+    <script src="./js/main.js"></script>
+    <!-- <script src="./js/zoom.js"></script> -->
   </body>
 </html>

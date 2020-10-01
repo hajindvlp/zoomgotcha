@@ -10,36 +10,6 @@ function initialize() {
   score = 0;
 }
 
-let completed = new Array(4).fill(false);
-let selectedTeacher;
-let score = 0;
-let scores = new Array(4).fill(0);
-let gameLoopId;
-
-const gameDur = 30; // sec
-const targetScore = 2000;
-const studentNum = 22;
-const States = {
-  STUDY: 1,
-  PLAY: 2,
-  NO: 3,
-  PENDING: 0,
-  NONE: -1
-};
-const studentNames = [ "",
-"2518양혜민", "2515박예찬", "2520여준호", "2533정정훈", "2535허가은", "2502김경범", 
-"2526위승빈", "2531전다예", "2501권경훈", "2506김서은", "2512노의찬", "2527유승환",
-"2532정원영", "2530임성주", "2529이태규", "2534하욱진", "2528이재석", "2517안나영",
-"2524오준서", "2522오승주", "2523오영준", "2507김은석",
-];
-const teacherNames = [
-  "장재원", "조혜연", "이재민", "김태철"
-]
-
-let studentState = array2d(4, 5, States.NO);
-let studentIds = array2d(4, 5, 0); // seat number to random number
-let studentLoc = new Array(studentNum+1).fill([0, 0]); // random number to seat number
-
 function gameInit() {
   for(let i=1 ; i<=3 ; i++) 
     for(let j=1 ; j<=4 ; j++) 

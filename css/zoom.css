@@ -37,7 +37,7 @@ p {
   height: 100%;
 
   background-color: #f4f4f4;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -70,7 +70,7 @@ p {
   width: 100%;
   height: 100%;
   background-color: #f4f4f4;
-  display: none;
+  display: flex;
   flex-direction: row;
 }
 
@@ -82,7 +82,7 @@ p {
 #meetContainer {
   height: 100%;
   width: 100%;
-  display: none;
+  display: flex;
   flex-direction: row;  
   background-color: #f4f4f4;
 }
@@ -139,7 +139,7 @@ p {
 #listContainer {
   height: 100%;
   width: 100%;
-  display: none;
+  display: flex;
   flex-direction: row;  
   background-color: #f4f4f4;
 }
@@ -176,7 +176,7 @@ p {
 #waitContainer {
   height: 100%;
   width: 100%;
-  display: none;
+  display: flex;
   flex-direction: row;  
   background-color: #f4f4f4;
 }
@@ -199,7 +199,7 @@ p {
 #endingContainer {
   height: 100%;
   width: 100%;
-  display: none;
+  display: flex;
   flex-direction: row;  
   background-color: #f4f4f4;
 }
@@ -213,14 +213,6 @@ p {
   bottom: 40px;
   right: 40px;
   width: 130px;
-}
-
-#endingContainer #endingCanvas {
-  position: absolute;
-  display: none;
-  width: 100%;
-  height: 100%;
-  z-index: 3000;
 }
 
 
