@@ -16,7 +16,7 @@ let score = 0;
 let scores = new Array(4).fill(0);
 let gameLoopId;
 
-const gameDur = 100; // sec
+const gameDur = 30; // sec
 const targetScore = 2000;
 const studentNum = 22;
 const States = {
