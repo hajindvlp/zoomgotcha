@@ -129,11 +129,28 @@ class StudentGame extends Game {
   }
 
   end() {
+    clearInterval(this.intervalId);
     for(let i=1 ; i<=3 ; i++) 
       for(let j=1 ; j<=4 ; j++) 
         if(gEBI(this.ids[i][j])) {
           gEBI(this.ids[i][j]).id = `${i}-${j}`;     
         }
+
+    gEBI("alert").style.backdropFilter = "blur(5px)";
+    gEBI("alert").style.display = "block";
+    gEBI("seconds").innerHTML = "5";
+    let leftTime = 4;
+    let alertInterval = setInterval(() => {
+      gEBI("seconds").innerHTML = leftTime;
+      if(leftTime == 0) {
+        gEBI("zoomStart").style.display = "block";
+        gEBI("alert").style.backdropFilter = "none";
+        gEBI("alert").style.display = "none";    
+        
+        clearInterval(alertInterval);
+      }
+      leftTime--;
+    }, 1000);
   }
 
   showStudent(sState, id) {
@@ -162,5 +179,8 @@ class StudentGame extends Game {
     gEBI("scoreNum").innerHTML = this.score;
     gEBI("scoreDelta").innerHTML = deltaScore;
     setTimeout(() => { gEBI("scoreDelta").innerHTML = ""; }, 500);
+  }
+
+  showAlert() {
   }
 }
